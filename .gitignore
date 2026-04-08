@@ -41,3 +41,7 @@ Thumbs.db
 # Cloud Shell temp files
 *.tmp
 *~
+**/.env
+__pycache__/
+*.pyc
+*.db

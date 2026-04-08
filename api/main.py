@@ -9,7 +9,6 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai.types import Content, Part
 import uvicorn
-import asyncio
 
 load_dotenv()
 
@@ -50,16 +49,6 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "healthy"}
-
-from orchestrator.agent import orchestrator
-
-@app.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
-    try:
-        final_response = await orchestrator.run(request.message, request.session_id)
-        return ChatResponse(response=final_response, session_id=request.session_id)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
